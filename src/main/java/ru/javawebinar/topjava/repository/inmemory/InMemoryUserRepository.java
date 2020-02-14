@@ -33,7 +33,12 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
-        return repository.remove(id) != null;
+        try {
+            return repository.remove(id) != null;
+        } catch (NullPointerException NPE) {
+            return false;
+        }
+
     }
 
     @Override
@@ -50,7 +55,11 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public User get(int id) {
         log.info("get {}", id);
-        return repository.get(id);
+        try {
+            return repository.get(id);
+        } catch (NullPointerException NPE) {
+            return null;
+        }
     }
 
     @Override
